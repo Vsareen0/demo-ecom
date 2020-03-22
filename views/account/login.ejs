@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <link href="../account.css" rel="stylesheet">
+  </head>
+  <body>
+    <form method="POST" action="/login">
+      <img src="../logo.jpg" />
+      <span id="errorMessage">
+        <% if(typeof(error) !== "undefined"){ %>
+          <%= error %>
+        <% } %>
+      </span>
+      <br/>
+      <input type="text" name="email" placeholder="Enter email" autofocus required/>
+      <br />
+      <input type="password" name="password" placeholder="Enter password" required/>
+      <br />
+      <button type="submit">Login</button>
+    </form>
+  </body>
+</html>

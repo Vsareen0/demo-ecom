@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pick Buck</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    />
+    <script src="https://use.fontawesome.com/9560573208.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <style>
+      body {
+        background-color: #dddddd;
+      }
+      .ml-auto {
+        left: auto !important;
+        right: 0px;
+      }
+      #wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+      }
+      .wrap_container {
+        width: 350px;
+        height: 150;
+        border: 1px solid #cecece;
+        box-shadow: 2px 5px 5px 15px rgba(190, 190, 190, 0.5);
+      }
+    </style>
+  </head>
+  <body>
+   <%- include('../partials/navigation'); %>
+    
+    <div id="wrapper">
+      <div class="wrap_container"></div>
+      <div class="wrap_container"></div>
+    </div>
+  </body>
+</html>
