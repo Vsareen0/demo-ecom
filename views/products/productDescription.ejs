@@ -32,15 +32,8 @@
 
     <%- include('../partials/navigation'); %>
 
-    <div class="product">
-      <div></div>
-      <div>
-        <%- include('../products/productList.ejs', { isLoggedIn: isLoggedIn, products: products}); %>
-      </div>
-    </div>
-    <!-- <button type="button" onclick="alert('Wokr')" <% if(!isLoggedIn){ %>
-      disabled<% } %> > testing Someting amazing -->
-
+    <%=  product.product_name %>
+    
     </button>
   </body>
 </html>
