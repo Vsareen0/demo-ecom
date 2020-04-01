@@ -1,63 +1,91 @@
-
-<nav class="navbar navbar-expand-md" style="background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);">
-  <!-- Brand -->
-  <a class="navbar-brand" href="/">
-    <img src="../../logo-sm.png" width="130" height="50" />
-  </a>
-
-  <!-- Toggler/collapsibe Button -->
-  <button
-    class="navbar-toggler bg-warning"
-    type="button"
-    data-toggle="collapse"
-    data-target="#collapsibleNavbar"
-  >
-    <i class="fa fa-bars" aria-hidden="true"></i>
-
-  </button>
-
-  <!-- Navbar links -->
-  <div class="collapse navbar-collapse" id="collapsibleNavbar">
+<nav
+  class="navbar navbar-expand-md fixed-top"
+  style="background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);display: flex;justify-content: space-around;align-items: center;"
+>
+  <div>
+    <!-- Brand -->
+    <a class="navbar-brand" href="/">
+      <img src="../../logo-sm.png" width="130" height="50" />
+    </a>
+  </div>
+  <div>
     <ul class="navbar-nav ml-auto">
-      <% if(!isLoggedIn){%>
       <li class="nav-item">
-        <a class="nav-link" href="/account/login">Login</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/account/register">Sign Up</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#"></a>
-      </li>
-      <% } else { %>
-      <li class="nav-item dropdown">
-        <a
-          class="nav-link dropdown-toggle"
-          href="#"
-          id="navbardrop"
-          data-toggle="dropdown"
-        >
-          Profile
-        </a>
-        <div class="dropdown-menu">
-          <a class="dropdown-item" href="/account/profile/login">Login Info</a>
-          <a class="dropdown-item" href="/account/profile/personal"
-            >Personal Info</a
-          >
+        <div id="searchBox">
+          <input
+            type="text"
+            name="searchProduct"
+            autocomplete="off"
+            onkeyup="search(this.value)"
+            placeholder="Search a product by Name"
+            onfocusout="clearList()"
+          />
+          <ul class="searchedProductList"></ul>
         </div>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">
-          <i class="fa fa-shopping-basket" aria-hidden="true"></i>
-        </a>
+        <!-- Toggler/collapsibe Button -->
+        <button
+          class="navbar-toggler bg-warning"
+          type="button"
+          data-toggle="collapse"
+          data-target="#collapsibleNavbar"
+          style="position: absolute;top: 10px;right: 0;"
+        >
+          <i class="fa fa-bars" aria-hidden="true"></i>
+        </button>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Order History</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="account/logout">Logout</a>
-      </li>
-      <% } %>
     </ul>
+  </div>
+
+  <div>
+    <!-- Navbar links -->
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+      <ul class="navbar-nav ml-auto">
+        <% if(!isLoggedIn){%>
+        <li class="nav-item">
+          <a class="nav-link btn btn-warning" href="/account/login">Login</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link btn btn-warning" href="/account/register"
+            >Sign Up</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#"></a>
+        </li>
+        <% } else { %>
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle btn btn-warning"
+            href="#"
+            id="navbardrop"
+            data-toggle="dropdown"
+          >
+            Profile
+          </a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item " href="/account/profile/login"
+              >Login Info</a
+            >
+            <a class="dropdown-item" href="/account/profile/personal"
+              >Personal Info</a
+            >
+          </div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link btn btn-warning" href="#">
+            <i class="fa fa-shopping-basket" aria-hidden="true"></i>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link btn btn-warning" href="#">Order History</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link btn btn-danger" href="account/logout">Logout</a>
+        </li>
+        <% } %>
+      </ul>
+    </div>
   </div>
 </nav>

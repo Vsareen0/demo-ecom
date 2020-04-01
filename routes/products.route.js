@@ -15,4 +15,12 @@ router.get("/:id/buynow", verify, (req, res) => {
     
 });
 
+router.get("/findProducts", async (req,res) => {    
+    const searchProduct = req.query.search;
+    await Product.find({product_name: {$regex: ".*" + searchProduct + ".*", $options: 'i'}}, function(err, data){
+        return res.status(200).json({result: data})
+    });
+});
+
+
 module.exports = router;

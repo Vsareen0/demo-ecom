@@ -19,6 +19,9 @@ const mongoose = require('mongoose');
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
+// Handling Back button issue with delete page cache
+const nocache = require('nocache');
+app.use(nocache());
 
 // Set View Engine to ejs
 app.set('view engine','ejs');
@@ -34,6 +37,7 @@ const authRoute = require('./routes/auth');
 const userRoute = require('./routes/user.route');
 const accountRoute = require('./routes/account.route');
 const productsRoute = require('./routes/products.route');
+
 
 // Route Middlewares
 app.use('/', authRoute);

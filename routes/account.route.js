@@ -9,11 +9,12 @@ router.get("/login", (req, res) => {
 
 // Account Register
 router.get("/register", (req, res) => {
-  res.render("account/register");
+  res.redirect("/");
 });
 
 router.get("/logout", (req, res) => {
-  res.clearCookie("accessToken").send("Logged Out !");
+  res.clearCookie("accessToken");
+  res.redirect("/");
 });
 
 router.get("/profile/login", verify, (req, res) => {

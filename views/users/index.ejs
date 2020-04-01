@@ -23,8 +23,67 @@
         right: 0px;
       }
       .product{
-        display: grid;
-        grid-template-columns: 1fr 5fr;
+        display: flex;
+      }
+      #searchBox {
+        display: flex;
+        flex-direction: column;
+        max-height: 30px;
+      }
+      .searchedProductList {
+        list-style-type: none;
+        margin-left: -40px;
+        z-index: 1;
+      }
+      .searchedProductList li {
+        background-color: #fff;
+        border: 1px solid black;
+        cursor: pointer;
+        padding: 7px;
+        font-size: .9em;
+        font-style: italic;
+        font-weight: 400;
+      }
+      .searchedProductList li::before {
+        content: "Pick Buck -> ";
+        font-weight: 700;
+        font-size: .9em;
+      }
+      #searchBox input{
+        width: 25em;
+        line-height: 3em;
+        border: none;
+        outline: none;
+        margin-top: -10px;
+        text-indent: 25px;
+        border-bottom: 5px solid #F9B507;
+      }
+      #searchBox input::placeholder {
+        font-style: italic;
+        font-weight: 600;
+      }
+      .nav-item {
+        margin-left: 10px;
+      }
+      .filterPane {
+        position: fixed;
+        margin-top: 120px;
+        height: 80vh;
+        background-color: #fff;
+        flex-grow: 1;
+      }
+      .transition {
+        transition: .3s ease-in all;
+      }
+      .filterPane button {
+        position: absolute;
+        right: -42px;
+      }
+      .productPane {
+        flex-grow: 3;
+      }
+      #collapsibleNavbar ul li{
+        margin: 20px 10px;
       }
     </style>
   </head>
@@ -33,8 +92,12 @@
     <%- include('../partials/navigation'); %>
 
     <div class="product">
-      <div></div>
-      <div>
+      <div class="filterPane">
+        <button type="button" class="btn_filter btn btn-dark" onclick="filterBox()">
+          <i class="fa fa-forward filterVisibility" aria-hidden="true"></i>
+        </button>
+      </div>
+      <div class="productPane">
         <%- include('../products/productList.ejs', { isLoggedIn: isLoggedIn, products: products}); %>
       </div>
     </div>
@@ -42,5 +105,54 @@
       disabled<% } %> > testing Someting amazing -->
 
     </button>
+    <script>
+      function search(val){
+        
+        if(val.length > 0){
+          console.log(val);
+          $.ajax({
+            method: "GET",
+            url: "/product/findProducts",
+            data: { search: val }
+          })
+          .fail(function(err){
+            console.log(err);
+          })
+          .done(function(data){
+            console.log(data);
+            
+            var list = [];
+            data.result.forEach(function(item){
+              list.push(`<li>${item.product_name}</li>`);
+            });
+            
+            var updatedList = [...new Set(list)];
+            var searchedList = document.getElementsByClassName("searchedProductList")[0];
+            searchedList.innerHTML = updatedList.join(" ");
+            
+          });
+      }
+      }
+
+      function clearList(){
+        var searchedList = document.getElementsByClassName("searchedProductList")[0];
+        searchedList.innerHTML = "";
+      }
+
+      function filterBox(){
+        var checkVisibility = document.querySelector(".filterVisibility");
+        checkVisibility.classList.toggle('fa-forward');
+        checkVisibility.classList.toggle('fa-backward');
+
+        if(checkVisibility.classList.contains("fa-backward")){
+          $(".filterPane").css("transition",".3s ease-in all").width("40vh");
+        } 
+        if(checkVisibility.classList.contains("fa-forward")){
+          $(".filterPane").css("transition",".3s ease-in all").width("-40vh");
+        }
+
+      }
+    </script>
   </body>
 </html>
+
