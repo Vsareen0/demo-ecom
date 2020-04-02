@@ -10,10 +10,18 @@
     </a>
     <span class="retailPrice">$ <%= product.retail_price %></span>
     <span class="discountedPrice">$ <%= product.discounted_price %></span>
-    <button type="submit" class="btnBuyNow" onclick="alert('Wokr')" <% if(!isLoggedIn){ %>
-      disabled<% } %> >
+ 
+    <div rel="tooltip" title="Please Login to continue !" class="wrap poptooltip">
+      <div class="overlap"></div>
+    <button type="submit" class="btnBuyNow" onclick="alert('Wokr')" 
+     <% if(!isLoggedIn){ %>
+      disabled
+      <% } %>
+      >
       Buy Now
     </button>
+    </div>
+    
   </div>
   <% }) %>
 </div>

@@ -1,0 +1,46 @@
+#searchBox {
+  display: flex;
+  flex-direction: column;
+  max-height: 30px;
+}
+.searchedProductList {
+  list-style-type: none;
+  margin-left: -40px;
+  z-index: 1;
+}
+.searchedProductList li {
+  background-color: #fff;
+  border-bottom: 1px solid #cecece;
+  cursor: pointer;
+  padding: 7px;
+  font-size: 0.9em;
+  font-style: italic;
+  font-weight: 400;
+}
+.searchedProductList li::before {
+  content: "Pick Buck -> ";
+  font-weight: 700;
+  font-size: 0.9em;
+}
+#searchBox input {
+  width: 25em;
+  line-height: 3em;
+  border: none;
+  outline: none;
+  margin-top: -10px;
+  text-indent: 25px;
+  border-bottom: 5px solid #f9b507;
+  background: url(../search.png) top 10px right 20px;
+  background-repeat: no-repeat;
+  
+}
+#searchBox input::placeholder {
+  font-style: italic;
+  font-weight: 600;
+}
+.nav-item {
+  margin-left: 10px;
+}
+#collapsibleNavbar ul li {
+  margin: 20px 10px;
+}

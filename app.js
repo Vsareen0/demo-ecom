@@ -52,6 +52,7 @@ app.set('globals', {user: null, isLoggedIn: false});
 // Use static route
 app.use(express.static(path.join(__dirname,"/public")));
 
+ 
 // Listen on PORT
 app.listen(PORT, () => console.log(`Server is running on port : ${PORT}`));
 

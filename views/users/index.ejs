@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <base href="/">
+    <base href="/" />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pick Buck</title>
@@ -9,7 +9,9 @@
       rel="stylesheet"
       href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     />
-    <link href="/products.css" rel="stylesheet" />
+    <link href="/css/index.css" rel="stylesheet" />
+    <link href="/css/products.css" rel="stylesheet" />
+    <link href="/css/navigation.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/9560573208.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -22,137 +24,100 @@
         left: auto !important;
         right: 0px;
       }
-      .product{
-        display: flex;
-      }
-      #searchBox {
-        display: flex;
-        flex-direction: column;
-        max-height: 30px;
-      }
-      .searchedProductList {
-        list-style-type: none;
-        margin-left: -40px;
-        z-index: 1;
-      }
-      .searchedProductList li {
-        background-color: #fff;
-        border: 1px solid black;
-        cursor: pointer;
-        padding: 7px;
-        font-size: .9em;
-        font-style: italic;
-        font-weight: 400;
-      }
-      .searchedProductList li::before {
-        content: "Pick Buck -> ";
-        font-weight: 700;
-        font-size: .9em;
-      }
-      #searchBox input{
-        width: 25em;
-        line-height: 3em;
-        border: none;
-        outline: none;
-        margin-top: -10px;
-        text-indent: 25px;
-        border-bottom: 5px solid #F9B507;
-      }
-      #searchBox input::placeholder {
-        font-style: italic;
-        font-weight: 600;
-      }
-      .nav-item {
-        margin-left: 10px;
-      }
-      .filterPane {
-        position: fixed;
-        margin-top: 120px;
-        height: 80vh;
-        background-color: #fff;
-        flex-grow: 1;
-      }
-      .transition {
-        transition: .3s ease-in all;
-      }
-      .filterPane button {
-        position: absolute;
-        right: -42px;
-      }
-      .productPane {
-        flex-grow: 3;
-      }
-      #collapsibleNavbar ul li{
-        margin: 20px 10px;
-      }
+      
     </style>
   </head>
   <body>
-
     <%- include('../partials/navigation'); %>
 
     <div class="product">
       <div class="filterPane">
-        <button type="button" class="btn_filter btn btn-dark" onclick="filterBox()">
+        <button
+          type="button"
+          class="btn_filter btn btn-dark"
+          onclick="filterBox()"
+        >
           <i class="fa fa-forward filterVisibility" aria-hidden="true"></i>
         </button>
       </div>
       <div class="productPane">
-        <%- include('../products/productList.ejs', { isLoggedIn: isLoggedIn, products: products}); %>
+        <%- include('../products/productList.ejs', { isLoggedIn: isLoggedIn,
+        products: products}); %>
       </div>
     </div>
-    <!-- <button type="button" onclick="alert('Wokr')" <% if(!isLoggedIn){ %>
-      disabled<% } %> > testing Someting amazing -->
 
-    </button>
     <script>
-      function search(val){
-        
-        if(val.length > 0){
-          console.log(val);
-          $.ajax({
-            method: "GET",
-            url: "/product/findProducts",
-            data: { search: val }
-          })
-          .fail(function(err){
+      (function() {
+        $("input[name='searchProduct']").on("keyup", function(e) {
+          if (e.key == "Escape") {
+            console.log("Escape Pressed");
+            clearList();
+          }
+        });
+
+        $(this).on("keyup", function(e) {
+          if (e.key == "Escape") {
+            console.log("Escape Pressed");
+            clearList();
+          }
+        });
+
+        $('[rel="tooltip"]').tooltip({
+          animated: "fade",
+          placement: "bottom"
+        });
+
+      })();
+
+      function loadSearchedProduct(e) {
+        var value = $(e).attr("value");
+        $.ajax({
+          method: "GET",
+          url: "/product/search",
+          data: { search: value }
+        })
+          .fail(function(err) {
             console.log(err);
           })
-          .done(function(data){
-            console.log(data);
-            
-            var list = [];
-            data.result.forEach(function(item){
-              list.push(`<li>${item.product_name}</li>`);
-            });
-            
-            var updatedList = [...new Set(list)];
-            var searchedList = document.getElementsByClassName("searchedProductList")[0];
-            searchedList.innerHTML = updatedList.join(" ");
-            
+          .done(function(data) {
+            clearList();
+
+            var productList = document.querySelector(".productList");
+
+            const items = data.result.map(product =>
+                `<div class="productItem">
+                  <a href="/product/description/${product._id}">
+                    <img src="${product.image[0]}" />
+                  </a>
+                  <a href="/product/description/${product._id}">
+                    <h4>${product.product_name}</h4>
+                  </a>
+                  <span class="retailPrice">$ ${product.retail_price}</span>
+                  <span class="discountedPrice">$ ${product.discounted_price}</span>
+                  <div rel="tooltip" title="Please Login to continue !" class="wrap poptooltip">
+                    <div class="overlap"></div>
+                      <button type="submit" class="btnBuyNow" onclick="alert('Wokr')" 
+                      <% if(!isLoggedIn){ %>
+                        disabled
+                      <% } %>
+                        >
+                        Buy Now
+                      </button>
+                  </div>
+                </div>`
+            );
+
+            if (items.length < 1) {
+              productList.innerHTML = `<p style='font-size: 1.2em;position: absolute;top: 0px;text-align: center'>
+                No product found in search.
+                </p>`;
+            } else {
+              productList.innerHTML = items.join(" ");
+            }
           });
       }
-      }
-
-      function clearList(){
-        var searchedList = document.getElementsByClassName("searchedProductList")[0];
-        searchedList.innerHTML = "";
-      }
-
-      function filterBox(){
-        var checkVisibility = document.querySelector(".filterVisibility");
-        checkVisibility.classList.toggle('fa-forward');
-        checkVisibility.classList.toggle('fa-backward');
-
-        if(checkVisibility.classList.contains("fa-backward")){
-          $(".filterPane").css("transition",".3s ease-in all").width("40vh");
-        } 
-        if(checkVisibility.classList.contains("fa-forward")){
-          $(".filterPane").css("transition",".3s ease-in all").width("-40vh");
-        }
-
-      }
     </script>
+    
+    <script src="/js/functions.js" defer></script>
   </body>
 </html>
-

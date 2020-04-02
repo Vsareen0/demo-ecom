@@ -1,0 +1,35 @@
+.product {
+  display: flex;
+}
+.filterPane {
+  position: fixed;
+  margin-top: 120px;
+  height: 80vh;
+  background-color: #fff;
+  flex-grow: 1;
+  z-index: 2000;
+}
+.transition {
+  transition: 0.3s ease-in all;
+}
+.filterPane button {
+  position: absolute;
+  right: -42px;
+}
+.wrap {
+  display: inline-block;
+  position: relative;
+  width: 100%;
+}
+
+.overlap {
+  display: flex;
+}
+
+.poptooltip .overlap {
+  display: block;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  z-index: 10;
+}

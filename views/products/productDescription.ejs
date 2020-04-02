@@ -10,6 +10,8 @@
       href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     />
     <link href="/products.css" rel="stylesheet" />
+    <link href="/navigation.css" rel="stylesheet" />
+    <link href="/index.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/9560573208.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -22,9 +24,52 @@
         left: auto !important;
         right: 0px;
       }
-      .product{
-        display: grid;
-        grid-template-columns: 1fr 5fr;
+      .description {
+        width: 95%;
+        height: 70vh;
+        display: flex;
+        flex-direction: row;
+        margin: auto;
+        border: 1px solid black;
+        margin-top: 150px;
+      }
+      .imageSection, .productDescription, .sellOptions {
+        border: 1px solid black;
+      }
+      .productDescription {
+        flex-grow: 3;
+      }
+      .sellOptions {
+        flex-grow: 1;
+      }
+      @media only screen and (max-width: 768px) {
+        .description {
+          width: 95%;
+          height: 70vh;
+          display: flex;
+          flex-direction: column;
+          margin: auto;
+          border: 1px solid black;
+          margin-top: 150px;
+        } 
+      }
+      .imageSection {
+        flex-grow: 2;
+        flex-direction: row;
+      }
+      .imageList ul {
+        list-style-type: none;
+      }
+      .imageList li {
+        width: 10vh;
+        height: 10vh;
+        border: 1px solid black;
+        margin-bottom: 10px;
+      }
+      #productImage {
+        width: 40vh;
+        height: 50vh;
+        border: 1px solid black;
       }
     </style>
   </head>
@@ -32,8 +77,28 @@
 
     <%- include('../partials/navigation'); %>
 
-    <%=  product.product_name %>
-    
+    <div class="description">
+      <div class="imageSection">
+        <div class="imageList">
+          <ul>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+          </ul>
+        </div>
+        <div id="productImage">
+
+        </div>
+      </div>
+      <div class="productDescription">
+
+      </div>
+      <div class="sellOptions">
+
+      </div>
+    </div>
+
     </button>
   </body>
 </html>

@@ -1,0 +1,49 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+form {
+  margin: 10% auto;
+  width: 300px;
+  border: 1px solid #cecece;
+  padding: 20px;
+  border-radius: 5px;
+}
+input {
+  margin-bottom: 20px;
+  text-indent: 5px;
+  padding: 5px;
+  border-top: none;
+  outline: none;
+  width: 100%;
+}
+input:focus{
+    border-color: black;
+}
+input::placeholder {
+  font-size: 1em;
+  font-family: sans-serif;
+}
+button {
+  border-radius: 3px;
+  border: none;
+  padding: 10px;
+  box-shadow: 2px 5px 3px 3px rgba(0, 0, 0, 0.3);
+  transition: 0.3s ease-in all;
+  margin: 0 auto;
+  cursor: pointer;
+  margin-left: 80px;
+}
+button:hover {
+  box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.8);
+}
+#errorMessage{
+  display: block;
+  color: white;
+  background-color: #FF9494;
+  width: 100%;
+  padding: 5px;
+  font-size: .9em;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}

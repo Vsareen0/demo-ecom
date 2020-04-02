@@ -22,5 +22,12 @@ router.get("/findProducts", async (req,res) => {
     });
 });
 
+router.get("/search", async (req,res) => {
+    const searchProduct = req.query.search;
+    await Product.find({description: {$regex: ".*" + searchProduct + ".*", $options: 'i'}}, function(err, data){
+        return res.status(200).json({result: data})
+    });
+});
+
 
 module.exports = router;
