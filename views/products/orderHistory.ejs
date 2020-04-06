@@ -101,12 +101,10 @@
   <body>
     <%- include('../partials/navigation', { isLoggedIn: isLoggedIn,cartItems:
     cartItems}); %>
-    <% if(cartItems.length > 0){ %>
-    <form method="POST" action="/product/checkout">
+
       <div class="cartTheme">
         <div class="cartList">
-          <% cartItems.forEach(function(cItem){ %>
-          <input type="checkbox" name="cartItem" value="<%= cItem._id %>" />
+          <% orders.forEach(function(cItem){ %>
           <div class="listItem">
             <div id="productImage">
               <img
@@ -124,22 +122,7 @@
               <div class="qty">
                 <p>Item Quantity: <span><%= cItem.quantity %></span></p>
               </div>
-              <div class="options">
-                <a
-                  href="/product/cart/edit/<%= cItem._id %>"
-                  class="btn btn-primary"
-                >
-                  <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                </a>
-                <a
-                  href="/product/cart/remove/<%= cItem._id %>"
-                  class="btn btn-danger"
-                >
-                  <i class="fa fa-trash-o" aria-hidden="true"></i>
-                </a>
-                <a href="/product/buy/<%= cItem._id %>" class="btnBuyNow">
-                  Buy Now
-                </a>
+              <div class="options"> 
               </div>
             </div>
           </div>
@@ -147,32 +130,8 @@
         </div>
 
         <div class="checkout">
-          <h4>Proceed to checkout</h4>
-          <p>
-            The amount to be paid is calculated for the checked products, you
-            can simply select select all products to select for purchase and
-            press proceed.
-          </p>
-          <h3>Total purchase:</h3>
-          <p>Amount: <span id="amount"></span></p>
-          <button type="submit" class="btn btn-success">Checkout</button>
-        </div>
+          
       </div>
-    </form>
-    <% } else { %>
-        <p style="margin-top: 150px;text-align: center;">Cart is empty</p>
-      <% } %>
-    <script>
-      $(document).ready(function(){
-        $('input[type="checkbox"]').click(function(){
-          if($(this).is(":checked")){
-              console.log("Checkbox is checked.");
-          }
-          else if($(this).is(":not(:checked)")){
-              console.log("Checkbox is unchecked.");
-          }
-      });
-    });
-    </script>
+
     </body>
 </html>

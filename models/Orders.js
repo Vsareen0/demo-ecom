@@ -17,7 +17,10 @@ var Orders = new mongoose.Schema({
         type: Number,
         required: true
     }
-},{collection: 'Orders'});
+},{collection: 'orders'});
+
+module.exports = mongoose.model('Orders', Orders);
+
 
 
 

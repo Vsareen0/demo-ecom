@@ -17,6 +17,9 @@ var Cart = new mongoose.Schema({
         type: Number,
         default: 1
     },
+    price: {
+        type: Number
+    },
     date: {
         type: Date,
         default: Date.now

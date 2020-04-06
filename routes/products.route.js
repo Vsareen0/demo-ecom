@@ -2,6 +2,7 @@ const router = require("express").Router();
 const verify = require("./verifyToken");
 const Product = require('../models/Products');
 const Cart  = require('../models/Cart');
+const Orders = require('../models/Orders');
 const moment = require('moment');
 
 router.get("/description/:id", async (req, res) => {
@@ -49,13 +50,36 @@ router.get("/cart", verify, async (req, res) => {
     res.render("products/cart", { isLoggedIn: true, cartItems: cart});
 });
 
+router.get("/orderHistory", verify, async(req, res) => {
+    // Identifier is used to check current user and display his cart items only.
+    const identifier = req.cookies.identifier;
+    const orders = await Orders.find({identify: identifier});
+    const cart = await Cart.find({identify: identifier});
+
+    const list = orders.map(async item => {
+        const p = await Product.findOne({_id: item.product_id});
+        item.product = p;
+        return item;
+    });
+
+    const l = await Promise.all(list);
+
+    if(!req.cookies.accessToken){
+        return res.render("products/orderHistory", { isLoggedIn: false, cartItems: cart, orders: orders});    
+    }
+    res.render("products/orderHistory", { isLoggedIn: true, cartItems: cart, orders: orders});
+});
+
 router.post("/addToCart", verify, async(req, res) => {
     const product_id = req.body.product;
     const identifier = req.cookies.identifier;
 
+    const product = await Product.find({_id: product_id});
+
     const addItemToCart = new Cart({
         identify: identifier,
         product_id: product_id,
+        price: product[0].discounted_price,
         date: moment().format('L')
     });
 
@@ -72,11 +96,29 @@ router.post("/addToCart", verify, async(req, res) => {
 router.post("/checkout", async (req,res) => {
     var val = [];
     val.push(req.body.cartItem);
-    console.log(req.body.pid);
+    
     const arr = [].concat.apply([], val);;
-    arr.forEach(id => {
-        var ids = id.split('/');
-        console.log(ids);
+    arr.forEach(async id => {
+        const cartItem = await Cart.find({_id: id});
+        var p_id = cartItem[0].product_id;
+        var qty = cartItem[0].quantity;
+        var identifier = cartItem[0].identify;
+        var price = cartItem[0].price; 
+
+        var newOrder = new Orders({
+            product_id: p_id,
+            quantity: qty,
+            identify: identifier,
+            price: price
+        });
+
+        try {
+            await newOrder.save();
+            await Cart.findByIdAndDelete({_id: id});
+            console.log('Saved order !',p_id);
+        }catch(err) {
+            console.log(`Error : ${err}`);
+        }
     }); 
     
     res.redirect('/product/cart');
