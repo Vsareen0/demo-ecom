@@ -1,5 +1,7 @@
 const router = require("express").Router();
 const verify = require("./verifyToken");
+const Cart = require('../models/Cart');
+const User = require('../models/User');
 
 // Account Login
 router.get("/login", (req, res) => {
@@ -9,7 +11,7 @@ router.get("/login", (req, res) => {
 
 // Account Register
 router.get("/register", (req, res) => {
-  res.redirect("/");
+  res.render("account/register");
 });
 
 router.get("/logout", (req, res) => {
@@ -17,9 +19,11 @@ router.get("/logout", (req, res) => {
   res.redirect("/");
 });
 
-router.get("/profile/login", verify, (req, res) => {
-  const user = res.app.settings['globals'].user;
-  res.render('account/profileLogin', {isLoggedIn: true, user: user});
+router.get("/profile/login", verify, async (req, res) => {
+  const identifier = req.cookies.identifier;
+  const user = await User.find({email: identifier});
+  const cart = await Cart.find({identify: identifier});
+  res.render('account/profileLogin', {isLoggedIn: true, user: user, cartItems: cart});
 });
 
 router.get("/profile/personal", verify, (req, res) => {

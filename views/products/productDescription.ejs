@@ -9,9 +9,9 @@
       rel="stylesheet"
       href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     />
-    <link href="/products.css" rel="stylesheet" />
-    <link href="/navigation.css" rel="stylesheet" />
-    <link href="/index.css" rel="stylesheet" />
+    <link href="/css/products.css" rel="stylesheet" />
+    <link href="/css/navigation.css" rel="stylesheet" />
+    <link href="/css/index.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/9560573208.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -26,21 +26,21 @@
       }
       .description {
         width: 95%;
-        height: 70vh;
         display: flex;
         flex-direction: row;
         margin: auto;
-        border: 1px solid black;
+        /* border: 1px solid black; */
         margin-top: 150px;
       }
       .imageSection, .productDescription, .sellOptions {
-        border: 1px solid black;
+        /* border: 1px solid black; */
       }
       .productDescription {
         flex-grow: 3;
       }
       .sellOptions {
         flex-grow: 1;
+        min-width: 200px;
       }
       @media only screen and (max-width: 768px) {
         .description {
@@ -49,13 +49,13 @@
           display: flex;
           flex-direction: column;
           margin: auto;
-          border: 1px solid black;
+          /* border: 1px solid black; */
           margin-top: 150px;
         } 
       }
       .imageSection {
-        flex-grow: 2;
-        flex-direction: row;
+        display: flex;
+        justify-content: center;
       }
       .imageList ul {
         list-style-type: none;
@@ -63,13 +63,29 @@
       .imageList li {
         width: 10vh;
         height: 10vh;
-        border: 1px solid black;
-        margin-bottom: 10px;
+        margin: 10px;
+      }
+      .imageList li img {
+        width: 10vh;
+        height: 10vh;
       }
       #productImage {
-        width: 40vh;
-        height: 50vh;
-        border: 1px solid black;
+        width: 50vh;
+        height: 60vh;
+        margin: 10px;
+      }
+      #productImage img {
+        width: 50vh;
+        height: 60vh;
+      }
+      .btnBuyNow {
+        border-radius: 0px;
+      }
+      .productDescription h4 , h6 , li, .discounted_price{
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+      }
+      .productDescription ul li {
+        list-style: decimal-leading-zero;
       }
     </style>
   </head>
@@ -81,24 +97,81 @@
       <div class="imageSection">
         <div class="imageList">
           <ul>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
+            <% product.image.forEach(function(img){ %>
+              <li><img src="<%= img %>" alt="<%= product.product_name %>"/></li>
+            <% }) %>
           </ul>
         </div>
         <div id="productImage">
-
+          <img src="<%= product.image[0] %>" alt="<%= product.product_name %>" />
         </div>
       </div>
       <div class="productDescription">
-
+        <h4><%= product.product_name %></h4>
+        <h6>Specifications : </h6>
+        <ul>
+          <% product.product_specifications.forEach(function(specifications){ %>
+            <li><%= specifications.key %>  <%= specifications.value %></li>
+          <% }) %>
+        </ul>
       </div>
       <div class="sellOptions">
 
+        <span class="discounted_price"><b>Price : </b>$ <%= product.discounted_price %></span>
+
+        <% if(!isLoggedIn){ %>
+          <div
+            rel="tooltip"
+            title="Please Login to continue !"
+            class="wrap poptooltip"
+          >
+            <div class="overlap"></div>
+            <button class="btnCart" type="button" value="<%= product %>" disabled>
+              Add To Cart
+            </button>
+          </div>
+          <div
+            rel="tooltip"
+            title="Please Login to continue !"
+            class="wrap poptooltip"
+          >
+            <div class="overlap"></div>
+            <button type="submit" class="btnBuyNow" onclick="alert('Wokr')" disabled>
+              Buy Now
+            </button>
+          </div>
+          <% } else {%>
+          <button class="btnCart" type="button" value="<%= product %>">
+            Add To Cart
+          </button>
+      
+          <button type="submit" class="btnBuyNow" onclick="alert('Wokr')">
+            Buy Now
+          </button>
+          <% } %>
       </div>
     </div>
 
     </button>
+
+    <script>
+      (function(){
+        $('.btnCart').on('click', function(e){
+          const p = e.target.value;
+          
+          $.ajax({
+            method: "POST",
+            url: "/product/addToCart",
+            data: { product: p, hello: "Hello" }
+          })
+          .fail(err=> {
+            console.error(`Failed Add to Cart: ${err}`);
+          })
+          .done(data => {
+            console.log(`Successfully added to Cart: ${data}`);
+          });
+        });
+      })()
+    </script>
   </body>
 </html>

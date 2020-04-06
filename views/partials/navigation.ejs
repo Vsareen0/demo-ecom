@@ -74,8 +74,9 @@
           </div>
         </li>
         <li class="nav-item">
-          <a class="nav-link btn btn-warning" href="#">
+          <a class="nav-link btn btn-warning" href="/product/cart">
             <i class="fa fa-shopping-basket" aria-hidden="true"></i>
+            <%= cartItems.length > 0 ? cartItems.length : '' %>
           </a>
         </li>
         <li class="nav-item">

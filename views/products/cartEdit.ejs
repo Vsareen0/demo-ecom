@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <base href="/" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pick Buck</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    />
+    <link href="/css/index.css" rel="stylesheet" />
+    <link href="/css/products.css" rel="stylesheet" />
+    <link href="/css/navigation.css" rel="stylesheet" />
+    <script src="https://use.fontawesome.com/9560573208.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <style>
+      body {
+        background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        min-height: 75vh;
+      }
+      .ml-auto {
+        left: auto !important;
+        right: 0px;
+      }
+      .cartTheme {
+        /* border: 1px solid black; */
+        display: flex;
+        margin-top: 100px;
+      }
+      .cartList {
+        /* border: 1px solid black; */
+        width: 150%;
+      }
+      .cartList > * {
+        margin-left: 20px;
+        margin-top: 10px;
+      }
+      .cartList input[type="checkbox"] {
+        width: 15px;
+        height: 15px;
+      }
+      .listItem {
+        margin-top: 20px;
+        display: flex;
+        flex-wrap: wrap;
+        background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+      }
+      #productImage img {
+        width: 20vh;
+        height: 20vh;
+      }
+      #productImage {
+        /* border: 1px solid black; */
+        width: 20vh;
+        height: 20vh;
+      }
+      .productInfo > * {
+        margin: 0.5em;
+        font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
+          sans-serif;
+      }
+      .btnBuyNow {
+        padding: 10px;
+        font-size: 0.9em;
+        border-radius: 10px;
+      }
+      .productOptions {
+        margin-top: 4vh;
+        /* border: 1px solid black; */
+      }
+      .checkout {
+        /* border: 1px solid black; */
+        background-color: #ebedee;
+      }
+      .checkout > * {
+        margin: 15px;
+        font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
+      }
+
+      @media only screen and (max-width: 768px) {
+        .cartTheme {
+          display: flex;
+          flex-direction: column-reverse;
+        }
+        .checkout {
+          width: 100%;
+        }
+        .listItem > * {
+          margin: .5em;
+        }
+        .cartList {
+          width: 100%;
+          margin-top: 0px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <%- include('../partials/navigation', { isLoggedIn: isLoggedIn,cartItems:
+    cartItems}); %>
+
+    <form method="POST" action="/product/checkout">
+      <div class="cartTheme">
+        <div class="cartList">
+          <% cartItems.forEach(function(cItem){ %>
+          <input type="checkbox" name="cartItem" value="<%= cItem._id %>" />
+          <div class="listItem">
+            <div id="productImage">
+              <img
+                src="<%= cItem.product.image[0] %>"
+                alt="<%= cItem.product.product_name %>"
+              />
+            </div>
+            <div class="productInfo">
+              <h4><%= cItem.product.product_name %></h4>
+              <span class="discounted_price"
+                >$ <%= cItem.product.discounted_price %></span
+              >
+            </div>
+            <div class="productOptions">
+              <div class="qty">
+                <p>Item Quantity: <span>
+                    <% if(cItem._id == id){ %>
+                        <input type="text" value="<%= cItem.quantity %>" id="qty">
+                        <a onclick="this.href='/product/cart/edit/confirm/<%= cItem._id %>?qty='+document.getElementById('qty').value" class="btn btn-success">Confirm</a>
+                        <a href="/product/cart/" class="btn btn-danger">Cancel</a>
+                    </form>
+                    <% } %>
+                </span></p>
+              </div>
+              <div class="options">
+                <a
+                  href="/product/cart/edit/<%= cItem._id %>"
+                  class="btn btn-primary"
+                >
+                  <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                </a>
+                <a
+                  href="/product/cart/remove/<%= cItem._id %>"
+                  class="btn btn-danger"
+                >
+                  <i class="fa fa-trash-o" aria-hidden="true"></i>
+                </a>
+                <a href="/product/buy/<%= cItem._id %>" class="btnBuyNow">
+                  Buy Now
+                </a>
+              </div>
+            </div>
+          </div>
+          <% }) %>
+        </div>
+
+        <div class="checkout">
+          <h4>Proceed to checkout</h4>
+          <p>
+            The amount to be paid is calculated for the checked products, you
+            can simply select select all products to select for purchase and
+            press proceed.
+          </p>
+          <h3>Total purchase:</h3>
+          <p>Amount: $6,000.00</p>
+          <button type="submit" class="btn btn-success">Checkout</button>
+        </div>
+      </div>
+    </form>
+  </body>
+</html>

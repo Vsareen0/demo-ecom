@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "node app",
+    "start": "nodemon app",
     "dev": "nodemon app"
   },
   "author": "",
@@ -20,6 +20,7 @@
     "express": "^4.17.1",
     "joi": "^14.3.1",
     "jsonwebtoken": "^8.5.1",
+    "moment": "^2.24.0",
     "mongodb": "^3.5.5",
     "mongoose": "^5.9.4",
     "nocache": "^2.1.0"

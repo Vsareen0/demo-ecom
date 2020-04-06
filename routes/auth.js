@@ -40,6 +40,7 @@ router.post("/login", async (req, res) => {
 
   const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET);
   res.cookie("accessToken", token, { maxAge: 1800000 });
+  res.cookie("identifier", user.email, { maxAge: 1800000 });
   res.app.settings['globals'].user = user;
   res.redirect('/');
 });

@@ -1,4 +1,3 @@
-
 <div class="productList">
   <% products.forEach(function(product){ %>
   <div class="productItem">
@@ -10,18 +9,36 @@
     </a>
     <span class="retailPrice">$ <%= product.retail_price %></span>
     <span class="discountedPrice">$ <%= product.discounted_price %></span>
- 
-    <div rel="tooltip" title="Please Login to continue !" class="wrap poptooltip">
+    <% if(!isLoggedIn){ %>
+    <div
+      rel="tooltip"
+      title="Please Login to continue !"
+      class="wrap poptooltip"
+    >
       <div class="overlap"></div>
-    <button type="submit" class="btnBuyNow" onclick="alert('Wokr')" 
-     <% if(!isLoggedIn){ %>
-      disabled
-      <% } %>
-      >
+      <button class="btnCart" type="button" value="<%= product._id %>" disabled>
+        Add To Cart
+      </button>
+    </div>
+    <div
+      rel="tooltip"
+      title="Please Login to continue !"
+      class="wrap poptooltip"
+    >
+      <div class="overlap"></div>
+      <button type="submit" class="btnBuyNow" onclick="alert('Wokr')" disabled>
+        Buy Now
+      </button>
+    </div>
+    <% } else {%>
+    <button class="btnCart" type="button" value="<%= product._id %>">
+      Add To Cart
+    </button>
+
+    <button type="submit" class="btnBuyNow" onclick="alert('Wokr')">
       Buy Now
     </button>
-    </div>
-    
+    <% } %>
   </div>
   <% }) %>
 </div>

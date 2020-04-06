@@ -14,7 +14,8 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
     <style>
       body {
-        background-color: #dddddd;
+        /* background-color: #dddddd; */
+        background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
       }
       .ml-auto {
         left: auto !important;
@@ -22,24 +23,72 @@
       }
       #wrapper {
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
+        margin-top: 110px;
         width: 100%;
       }
       .wrap_container {
-        width: 350px;
-        height: 150;
-        border: 1px solid #cecece;
-        box-shadow: 2px 5px 5px 15px rgba(190, 190, 190, 0.5);
+        width: 450px;
+        max-width: 90vw;
+        margin-top: 20px;
+        background-color: #fff;
+        box-shadow: rgb(184, 196, 194) 0px 4px 10px -4px;
+        border: 1px solid rgb(231, 238, 236);
+        border-image: initial;
+        border-radius: 4px;
+        transition: border 300ms ease-in-out 0s, box-shadow 300ms ease-in-out 0s;
+      }
+      .wrap_container > * {
+        margin-left: 20px;
+        margin-top: 7px;
+        margin-bottom: 12px;
+      }
+      label {
+        font-size: .9em;
+        font-weight: 500;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
+      input {
+        width: 80%;
+        text-indent: 10px;        
+        border: 1px solid rgb(184, 196, 194);
+        border-radius: 3px;
+        border-image: initial;
+      }
+      input[type='email'] {
+        color: rgb(137, 152, 155);
+        background-color: rgb(231, 238, 236);
+      }
+      button {
+        margin-top:20px;
+        margin-bottom: 20px;
       }
     </style>
   </head>
   <body>
-   <%- include('../partials/navigation'); %>
+   <%- include('../partials/navigation',{ cartItems: cartItems}); %>
     
+   <form method="POST" action="/account/profile/update">
     <div id="wrapper">
-      <div class="wrap_container"></div>
-      <div class="wrap_container"></div>
+      <div class="wrap_container">
+        <label for="email">Email</label><br/>
+        <input type="email" name="email" value="<%= user[0].email %>" required disabled />
+      </div>
+      <div class="wrap_container">
+        <h4>Password</h4>
+        <label for="password">Current Password</label><br/>
+        <input type="password" name="password" value="" required />
+        <br/>
+        <label for="npassword">New Password</label><br/>
+        <input type="password" name="npassword" value="" required />
+        <br/>
+        <label for="cpassword">Confirm Password</label><br/>
+        <input type="password" name="cpassword" value="" required />
+      </div>
+      <button type="submit" class="btn btn-light">Save Changes</button>
     </div>
+  </form>
   </body>
 </html>
