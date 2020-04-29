@@ -1,4 +1,4 @@
-// Express 
+// Required packages 
 const express = require('express');
 const path = require('path');
 const app = express()

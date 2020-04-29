@@ -1,3 +1,4 @@
+const Cart = require('../../models/Cart');
 function search(val) {
   $.ajax({
     method: "GET",

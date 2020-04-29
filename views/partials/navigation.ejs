@@ -55,7 +55,7 @@
           <a class="nav-link" href="#"></a>
         </li>
         <% } else { %>
-        <li class="nav-item dropdown">
+        <!-- <li class="nav-item dropdown">
           <a
             class="nav-link dropdown-toggle btn btn-warning"
             href="#"
@@ -72,11 +72,11 @@
               >Personal Info</a
             >
           </div>
-        </li>
+        </li> -->
         <li class="nav-item">
-          <a class="nav-link btn btn-warning" href="/product/cart">
+          <a class="nav-link btn btn-warning cartItems" href="/product/cart">
             <i class="fa fa-shopping-basket" aria-hidden="true"></i>
-            <%= cartItems.length > 0 ? cartItems.length : '' %>
+            <%= cartItems.length > 0 ? cartItems.length : 'Empty' %>
           </a>
         </li>
         <li class="nav-item">

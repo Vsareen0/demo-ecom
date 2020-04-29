@@ -12,8 +12,30 @@ router.get("/description/:id", async (req, res) => {
     res.render('products/productDescription', {isLoggedIn: true, product: product, cartItems: cart});
 });
 
-router.get("/:id/buynow", verify, (req, res) => {
-    
+router.get("/buy/:id", verify, async (req, res) => {
+    let id = req.params.id;
+    const cartItem = await Cart.find({_id: id});
+        var p_id = cartItem[0].product_id;
+        var qty = cartItem[0].quantity;
+        var identifier = cartItem[0].identify;
+        var price = cartItem[0].price; 
+
+        var newOrder = new Orders({
+            product_id: p_id,
+            quantity: qty,
+            identify: identifier,
+            price: price
+        });
+
+        try {
+            await newOrder.save();
+            await Cart.findByIdAndDelete({_id: id});
+            console.log('Saved order !',p_id);
+        }catch(err) {
+            console.log(`Error : ${err}`);
+        }
+
+        res.redirect("/product/orderHistory");
 });
 
 router.get("/findProducts", async (req,res) => {    
@@ -121,7 +143,7 @@ router.post("/checkout", async (req,res) => {
         }
     }); 
     
-    res.redirect('/product/cart');
+    res.redirect('/product/orderHistory');
 });
 
 router.get("/cart/edit/:id", verify, async (req, res) => {

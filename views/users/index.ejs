@@ -81,7 +81,9 @@
             console.error(`Failed Add to Cart: ${err}`);
           })
           .done(data => {
-            console.log(`Successfully added to Cart: ${data}`);
+            // console.log(`Successfully added to Cart: ${data}`);
+            let cartData = $(data).find(".cartItems");
+            document.querySelector(".cartItems").innerHTML = cartData[0].innerHTML.trim();
           });
         });
 
