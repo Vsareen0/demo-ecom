@@ -4,17 +4,17 @@
 
 ## Use case:
 
-1. Authentication and Authorization using jwt(jsonwebtokens) 
-2. Payment Integration Mechanism (Not yet decided b/w paypal and stripe)
-3. Fetch and display products from database
-4. Signup Users (storing encrypted password in database)
-5. View order History 
-6. View and edit profile info
+1. [x] Authentication and Authorization using jwt(jsonwebtokens) 
+2. ~Payment Integration Mechanism (Not yet decided b/w paypal and stripe)~
+3. [x] Fetch and display products from database
+4. [x] Signup Users (storing encrypted password in database)
+5. [x] View order History 
+6. [x] View and edit profile info
 
 ## Technologies:
 
- - MongoDB for database 
-- Express for handling middleware (routes + requests + views)
-- Node.js for backend
+- [x] MongoDB for database 
+- [x] Express for handling middleware (routes + requests + views)
+- [x] Node.js for backend
 
    
